@@ -115,19 +115,28 @@ class _DifficultyBtns extends StatelessWidget {
           selected: difficulty == 0,
           onPressed: () => onDifficultyPressed(0),
           onHover: (over) => onDifficultyFocused(over ? 0 : null),
-        ),
+        )
+            .animate()
+            .fadeIn(delay: 1.3.seconds, duration: .35.seconds)
+            .slide(begin: const Offset(0, .2)),
         _DifficultyBtn(
           label: 'Normal',
           selected: difficulty == 1,
           onPressed: () => onDifficultyPressed(1),
           onHover: (over) => onDifficultyFocused(over ? 1 : null),
-        ),
+        )
+            .animate()
+            .fadeIn(delay: 1.5.seconds, duration: .35.seconds)
+            .slide(begin: const Offset(0, .2)),
         _DifficultyBtn(
           label: 'Hardcore',
           selected: difficulty == 2,
           onPressed: () => onDifficultyPressed(2),
           onHover: (over) => onDifficultyFocused(over ? 2 : null),
-        ),
+        )
+            .animate()
+            .fadeIn(delay: 1.7.seconds, duration: .35.seconds)
+            .slide(begin: const Offset(0, .2)),
         const Gap(20),
       ],
     );
@@ -160,10 +169,16 @@ class _DifficultyBtn extends StatelessWidget {
             child: Stack(
               children: [
                 /// Bg with fill and outline
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF00D1FF).withOpacity(.1),
-                    border: Border.all(color: Colors.white, width: 5),
+                AnimatedOpacity(
+                  opacity: (!selected && (state.isHovered || state.isFocused))
+                      ? 1
+                      : 0,
+                  duration: .3.seconds,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF00D1FF).withOpacity(.1),
+                      border: Border.all(color: Colors.white, width: 5),
+                    ),
                   ),
                 ),
 
@@ -243,8 +258,12 @@ class _StartBtnState extends State<_StartBtn> {
                 ),
               ),
             ],
-          ),
-        );
+          )
+              .animate(autoPlay: false, onInit: (c) => _btnAnim = c)
+              .shimmer(duration: .7.seconds, color: Colors.black),
+        ).animate().fadeIn(delay: 2.3.seconds).slide(
+              begin: const Offset(0, .2),
+            );
       },
     );
   }
